@@ -89,15 +89,20 @@ document.querySelector('.menu').onclick = (event) => {
       }
     } else {
       result = operationsWithDecimal(sign, firstNum, secondNum);
-      console.log(result);
       firstNum = result[0];
       secondNum = result[1];
       if (firstNum.length >= MAX_VALUE) {
         firstNum = firstNum.substring(0, MAX_VALUE);
       }
     }
+
+    // Display the result(also display Error if divide by 0)
     isEnd = true;
-    displayResult.innerText = firstNum;
+    if (firstNum === '' && secondNum === '') {
+      displayResult.innerText = 'Error';
+    } else {
+      displayResult.innerText = firstNum;
+    }
   }
 
   if (key === '%') {

@@ -15,12 +15,11 @@ export function operationsWithDecimal(sign, num1, num2) {
       firstNum = (firstNum - secondNum) / powerOfTen(MAX_VALUE_DECIMAL);
       break;
     case '/':
-      if (secondNum === '0') {
-        displayResult.innerText = 'Error';
+      if (secondNum === 0) {
         firstNum = '';
         secondNum = '';
         sign = '';
-        return;
+        return [firstNum, secondNum];
       }
       firstNum /= secondNum;
       break;

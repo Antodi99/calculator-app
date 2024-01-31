@@ -12,12 +12,11 @@ export function operationsWithIntegers(sign, firstNum, secondNum) {
       firstNum -= secondNum;
       break;
     case '/':
-      if (secondNum === '0') {
-        displayResult.innerText = 'Error';
+      if (secondNum === 0) {
         firstNum = '';
         secondNum = '';
         sign = '';
-        return;
+        return [firstNum, secondNum];
       }
       firstNum /= secondNum;
       break;
