@@ -43,7 +43,6 @@ document.querySelector('.menu').onclick = (event) => {
 
   // Change sign(from + to -, and form - to +)
   if (key === '+/-') {
-    console.log(firstNum, secondNum, sign);
     if ((sign === '' && secondNum === '') || (sign && secondNum === '')) {
       firstNum = makeFormatedNumber(firstNum, ',') * -1;
       firstNum = makeFormatedNumber(firstNum, '.');
