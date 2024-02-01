@@ -4,7 +4,7 @@
 
 ### [Link to the task](./docs/task.pdf)
 
-### [Link to deployed app]()
+### [Link to deployed app](https://antodi99.github.io/calculator-app/)
 
 ## Done:
 
