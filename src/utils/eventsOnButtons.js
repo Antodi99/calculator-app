@@ -32,16 +32,14 @@ export function eventsOnButtons(event, pressed) {
     key = event.key;
   }
 
-  if (!digit.includes(key) && !action.includes(key)) {
-    event.preventDefault();
-  }
-
   if (key === 'AC' || key === 'Backspace') {
+    event.preventDefault();
     clearAll();
   }
 
   // Change sign(from + to -, and form - to +)
   if (key === '+/-') {
+    event.preventDefault();
     if ((sign === '' && secondNum === '') || (sign && secondNum === '')) {
       firstNum = makeFormatedNumber(firstNum, ',') * -1;
       firstNum = makeFormatedNumber(firstNum, '.');
@@ -54,7 +52,16 @@ export function eventsOnButtons(event, pressed) {
   }
 
   // Press 0-9, ',' and checking if result is <= MAX_VALUE
-  if (digit.includes(key) && displayResult.innerText.length <= 12) {
+  if (
+    (digit.includes(key) && displayResult.innerText.length <= 12) ||
+    key === '.'
+  ) {
+    event.preventDefault();
+
+    if (key === '.') {
+      key = ',';
+    }
+
     if (sign === '' && secondNum === '') {
       firstNum = displayNumbers(key, firstNum);
       displayResult.innerText = firstNum;
@@ -70,6 +77,7 @@ export function eventsOnButtons(event, pressed) {
 
   // Press any sign from ['-', '+', 'x', '/'] and display it
   if (action.includes(key) || key === '*') {
+    event.preventDefault();
     if (key === '*') {
       key = 'x';
     }
@@ -80,7 +88,13 @@ export function eventsOnButtons(event, pressed) {
 
   // Return the result of operation when press "="
   if (key === '=' || key === 'Enter') {
+    event.preventDefault();
     let result;
+
+    if (secondNum === '') {
+      displayResult.innerText = firstNum;
+    }
+
     if (!firstNum.includes(',') && !secondNum.includes(',')) {
       result = operationsWithIntegers(sign, firstNum, secondNum);
       firstNum = result[0];
@@ -107,6 +121,7 @@ export function eventsOnButtons(event, pressed) {
   }
 
   if (key === '%') {
+    event.preventDefault();
     if (secondNum === '') {
       firstNum = makeFormatedNumber(firstNum, ',') / 100;
       firstNum = makeFormatedNumber(firstNum, '.');
