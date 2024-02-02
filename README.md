@@ -68,6 +68,7 @@ npm run dev
     ├── displayNumbers.js
     ├── eventsOnButtons.js
     ├── formatNumber.js
+    ├── isEqual.js
     ├── operationsWithDecimal.js
     ├── operationsWithIntegers.js
     └── removeDecimal.js
