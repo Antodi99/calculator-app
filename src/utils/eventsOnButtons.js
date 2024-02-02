@@ -111,6 +111,7 @@ export function eventsOnButtons(event, pressed) {
     displayResult.innerText = formatDisplay(firstNum, MAX_VALUE);
   }
 
+  // Return number / 100 when press '%'
   if (key === '%') {
     event.preventDefault();
     if (secondNum === '') {

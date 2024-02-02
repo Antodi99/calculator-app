@@ -1,19 +1,19 @@
 import { makeFormatedNumber } from './formatNumber';
-import { powerOfTen, removeDecimal } from './removeDecimal';
+import { removeDecimal } from './removeDecimal';
 
 export function operationsWithDecimal(sign, num1, num2) {
-  const MAX_VALUE_DECIMAL = 5;
+  const MAX_VALUE_DECIMAL = 100000;
 
-  let firstNum = removeDecimal(num1, MAX_VALUE_DECIMAL);
-  let secondNum = removeDecimal(num2, MAX_VALUE_DECIMAL);
+  let firstNum = removeDecimal(num1);
+  let secondNum = removeDecimal(num2);
 
   switch (sign) {
     case '+':
-      firstNum = (firstNum + secondNum) / powerOfTen(MAX_VALUE_DECIMAL);
+      firstNum = (firstNum + secondNum) / MAX_VALUE_DECIMAL;
       break;
     case '-':
       console.log(firstNum, secondNum);
-      firstNum = (firstNum - secondNum) / powerOfTen(MAX_VALUE_DECIMAL);
+      firstNum = (firstNum - secondNum) / MAX_VALUE_DECIMAL;
       break;
     case '/':
       if (secondNum === 0) {
@@ -25,10 +25,10 @@ export function operationsWithDecimal(sign, num1, num2) {
       firstNum /= secondNum;
       break;
     case 'x':
-      firstNum = (firstNum * secondNum) / powerOfTen(MAX_VALUE_DECIMAL) ** 2;
+      firstNum = (firstNum * secondNum) / MAX_VALUE_DECIMAL ** 2;
       break;
     case '%':
-      firstNum = firstNum / powerOfTen(MAX_VALUE_DECIMAL) / 100;
+      firstNum = firstNum / MAX_VALUE_DECIMAL / 100;
   }
   firstNum = makeFormatedNumber(firstNum, '.');
   return firstNum;

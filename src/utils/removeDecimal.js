@@ -1,24 +1,15 @@
-export function powerOfTen(n) {
-  let result = 1;
+export function removeDecimal(number) {
+  let [integerPart, decimalPart] = number.split(',');
 
-  if (n === 0) {
-    return 1;
-  }
-
-  for (let i = 0; i < n; i++) {
-    result *= 10;
-  }
-
-  return result;
-}
-
-export function removeDecimal(num, MAX_VALUE_DECIMAL) {
-  if (num.includes(',')) {
-    num = Number(num.replace(',', '.')) * powerOfTen(MAX_VALUE_DECIMAL);
-    num = Number(num.toString().split('.')[0]);
+  if (decimalPart) {
+    for (let i = decimalPart.length; i < 5; i++) {
+      decimalPart += '0';
+    }
+    return Number(integerPart.concat(decimalPart));
   } else {
-    num = Number(num) * powerOfTen(MAX_VALUE_DECIMAL);
+    for (let i = 0; i < 5; i++) {
+      integerPart += '0';
+    }
+    return Number(integerPart);
   }
-
-  return num;
 }
