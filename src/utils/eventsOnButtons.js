@@ -1,14 +1,18 @@
 import { displayResult } from '..';
 import { displayNumbers } from './displayNumbers';
-import { makeFormatedNumber } from './formatNumber';
-import { operationsWithDecimal } from './operationsWithDecimal';
-import { operationsWithIntegers } from './operationsWithIntegers';
+import {
+  formatPercentOperation,
+  isOnlyZeros,
+  makeFormatedNumber,
+} from './formatNumber';
+import { isEqual } from './isEqual';
 
 // Constants for calculating
 const MAX_VALUE = 13;
 let firstNum = '0';
 let secondNum = '';
 let sign = '';
+let newSign = '';
 let isEnd = false;
 
 const digit = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ','];
@@ -19,6 +23,7 @@ function clearAll() {
   firstNum = '';
   secondNum = '';
   sign = '';
+  newSign = '';
   isEnd = false;
   displayResult.innerText = '0';
 }
@@ -81,6 +86,16 @@ export function eventsOnButtons(event, pressed) {
     if (key === '*') {
       key = 'x';
     }
+    if (sign && firstNum && secondNum) {
+      newSign = key;
+    }
+    if (newSign) {
+      const result = isEqual(event, firstNum, secondNum, sign, MAX_VALUE);
+      firstNum = result[0];
+      secondNum = result[1];
+      newSign = sign;
+      newSign = '';
+    }
     sign = key;
     displayResult.innerText = sign;
     return;
@@ -88,34 +103,10 @@ export function eventsOnButtons(event, pressed) {
 
   // Return the result of operation when press "="
   if (key === '=' || key === 'Enter') {
-    event.preventDefault();
-    let result;
-
-    if (secondNum === '') {
-      displayResult.innerText = firstNum;
-    }
-
-    if (!firstNum.includes(',') && !secondNum.includes(',')) {
-      result = operationsWithIntegers(sign, firstNum, secondNum);
-      firstNum = result[0];
-      secondNum = result[1];
-      if (firstNum.length >= MAX_VALUE) {
-        firstNum = firstNum.substring(0, MAX_VALUE);
-      }
-    } else {
-      result = operationsWithDecimal(sign, firstNum, secondNum);
-      firstNum = result[0];
-      secondNum = result[1];
-      if (firstNum.length >= MAX_VALUE) {
-        firstNum = firstNum.substring(0, MAX_VALUE);
-      }
-    }
-
-    // Display the result(also display Error if divide by 0)
-    isEnd = true;
-    if (firstNum === '' && secondNum === '') {
-      displayResult.innerText = 'Error';
-    } else {
+    const result = isEqual(event, firstNum, secondNum, sign, MAX_VALUE);
+    firstNum = result[0];
+    secondNum = result[1];
+    if (result) {
       displayResult.innerText = firstNum;
     }
   }
@@ -123,12 +114,17 @@ export function eventsOnButtons(event, pressed) {
   if (key === '%') {
     event.preventDefault();
     if (secondNum === '') {
-      firstNum = makeFormatedNumber(firstNum, ',') / 100;
-      firstNum = makeFormatedNumber(firstNum, '.');
+      firstNum = formatPercentOperation(firstNum);
+      if (isOnlyZeros(firstNum)) {
+        clearAll();
+        firstNum = '0';
+      }
       displayResult.innerText = firstNum;
     } else {
-      secondNum = makeFormatedNumber(secondNum, ',') / 100;
-      secondNum = makeFormatedNumber(secondNum, '.');
+      secondNum = formatPercentOperation(secondNum);
+      if (isOnlyZeros(secondNum)) {
+        secondNum = '0';
+      }
       displayResult.innerText = secondNum;
     }
   }
