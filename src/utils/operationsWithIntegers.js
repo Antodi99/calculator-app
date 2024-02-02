@@ -26,7 +26,6 @@ export function operationsWithIntegers(sign, firstNum, secondNum) {
   }
 
   firstNum = makeFormatedNumber(firstNum, '.');
-  secondNum = makeFormatedNumber(secondNum, '.');
 
-  return [firstNum, secondNum];
+  return firstNum;
 }

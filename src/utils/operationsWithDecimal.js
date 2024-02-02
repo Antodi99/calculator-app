@@ -12,6 +12,7 @@ export function operationsWithDecimal(sign, num1, num2) {
       firstNum = (firstNum + secondNum) / powerOfTen(MAX_VALUE_DECIMAL);
       break;
     case '-':
+      console.log(firstNum, secondNum);
       firstNum = (firstNum - secondNum) / powerOfTen(MAX_VALUE_DECIMAL);
       break;
     case '/':
@@ -29,11 +30,6 @@ export function operationsWithDecimal(sign, num1, num2) {
     case '%':
       firstNum = firstNum / powerOfTen(MAX_VALUE_DECIMAL) / 100;
   }
-
-  secondNum /= powerOfTen(MAX_VALUE_DECIMAL);
-
   firstNum = makeFormatedNumber(firstNum, '.');
-  secondNum = makeFormatedNumber(secondNum, '.');
-
-  return [firstNum, secondNum];
+  return firstNum;
 }

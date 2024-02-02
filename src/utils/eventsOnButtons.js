@@ -1,29 +1,32 @@
 import { displayResult } from '..';
 import { displayNumbers } from './displayNumbers';
 import {
+  formatDisplay,
   formatPercentOperation,
   isOnlyZeros,
   makeFormatedNumber,
 } from './formatNumber';
-import { isEqual } from './isEqual';
+import { calculate } from './calculate';
 
 // Constants for calculating
 const MAX_VALUE = 13;
 let firstNum = '0';
 let secondNum = '';
+let prevNum = '';
+let prevSign = '';
 let sign = '';
-let newSign = '';
 let isEnd = false;
 
 const digit = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ','];
-const action = ['-', '+', 'x', '/'];
+const action = ['-', '+', 'x', '/', '*'];
 
 // Function that clean display
 function clearAll() {
   firstNum = '';
   secondNum = '';
   sign = '';
-  newSign = '';
+  prevNum = '';
+  prevSign = '';
   isEnd = false;
   displayResult.innerText = '0';
 }
@@ -37,7 +40,7 @@ export function eventsOnButtons(event, pressed) {
     key = event.key;
   }
 
-  if (key === 'AC' || key === 'Backspace') {
+  if (key === 'AC' || key === 'Backspace' || key === 'Delete') {
     event.preventDefault();
     clearAll();
   }
@@ -81,34 +84,31 @@ export function eventsOnButtons(event, pressed) {
   }
 
   // Press any sign from ['-', '+', 'x', '/'] and display it
-  if (action.includes(key) || key === '*') {
+  if (action.includes(key)) {
     event.preventDefault();
     if (key === '*') {
       key = 'x';
     }
     if (sign && firstNum && secondNum) {
-      newSign = key;
-    }
-    if (newSign) {
-      const result = isEqual(event, firstNum, secondNum, sign, MAX_VALUE);
-      firstNum = result[0];
-      secondNum = result[1];
-      newSign = sign;
-      newSign = '';
+      firstNum = calculate(firstNum, secondNum, sign);
+      secondNum = '';
+      displayResult.innerText = formatDisplay(firstNum, MAX_VALUE);
     }
     sign = key;
-    displayResult.innerText = sign;
     return;
   }
 
   // Return the result of operation when press "="
   if (key === '=' || key === 'Enter') {
-    const result = isEqual(event, firstNum, secondNum, sign, MAX_VALUE);
-    firstNum = result[0];
-    secondNum = result[1];
-    if (result) {
-      displayResult.innerText = firstNum;
+    if (!secondNum && prevNum && prevSign) {
+      firstNum = calculate(firstNum, prevNum, prevSign);
+    } else if (secondNum && sign) {
+      firstNum = calculate(firstNum, secondNum, sign);
+      prevNum = secondNum;
+      prevSign = sign;
+      secondNum = '';
     }
+    displayResult.innerText = formatDisplay(firstNum, MAX_VALUE);
   }
 
   if (key === '%') {
