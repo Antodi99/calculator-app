@@ -65,10 +65,10 @@ npm run dev
 │   ├── index.scss
 │   └── reset.scss
 └── utils # utils for calculating logic(js files)
+    ├── calculate.js
     ├── displayNumbers.js
     ├── eventsOnButtons.js
     ├── formatNumber.js
-    ├── isEqual.js
     ├── operationsWithDecimal.js
     ├── operationsWithIntegers.js
     └── removeDecimal.js
