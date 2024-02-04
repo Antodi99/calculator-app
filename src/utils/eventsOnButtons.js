@@ -38,6 +38,7 @@ export function eventsOnButtons(event, pressed) {
   if (key === 'AC' || key === 'Backspace' || key === 'Delete') {
     event.preventDefault();
     clearAll();
+    firstNum = '0';
   }
 
   // Change sign(from + to -, and form - to +)
