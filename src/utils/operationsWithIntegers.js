@@ -25,7 +25,10 @@ export function operationsWithIntegers(sign, firstNum, secondNum) {
       break;
   }
 
-  if (firstNum > Number.MAX_SAFE_INTEGER) {
+  if (
+    firstNum > Number.MAX_SAFE_INTEGER ||
+    firstNum < Number.MIN_SAFE_INTEGER
+  ) {
     return 'Error';
   }
 

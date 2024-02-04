@@ -29,6 +29,19 @@ export function operationsWithDecimal(sign, num1, num2) {
     case '%':
       firstNum = firstNum / MAX_VALUE_DECIMAL / 100;
   }
+
+  if (
+    firstNum > Number.MAX_SAFE_INTEGER ||
+    firstNum < Number.MIN_SAFE_INTEGER
+  ) {
+    return 'Error';
+  }
+
   firstNum = makeFormatedNumber(firstNum, '.');
+
+  if (firstNum === 'NaN' || secondNum === 'NaN') {
+    return 'Error';
+  }
+
   return firstNum;
 }
