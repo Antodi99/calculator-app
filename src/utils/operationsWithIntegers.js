@@ -16,7 +16,7 @@ export function operationsWithIntegers(sign, firstNum, secondNum) {
         firstNum = '';
         secondNum = '';
         sign = '';
-        return [firstNum, secondNum];
+        return 'Error';
       }
       firstNum /= secondNum;
       break;

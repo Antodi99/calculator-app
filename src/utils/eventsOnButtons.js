@@ -94,12 +94,13 @@ export function eventsOnButtons(event, pressed) {
     return;
   }
 
+  if (firstNum === 'Error') {
+    clearAll();
+    firstNum = '0';
+  }
+
   // Return the result of operation when press "="
   if (key === '=' || key === 'Enter') {
-    if (firstNum === 'Error') {
-      clearAll();
-      firstNum = '0';
-    }
     if (!secondNum && prevNum && prevSign) {
       firstNum = calculate(firstNum, prevNum, prevSign);
     } else if (secondNum && sign) {

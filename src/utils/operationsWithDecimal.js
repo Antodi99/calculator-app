@@ -19,7 +19,7 @@ export function operationsWithDecimal(sign, num1, num2) {
         firstNum = '';
         secondNum = '';
         sign = '';
-        return [firstNum, secondNum];
+        return 'Error';
       }
       firstNum /= secondNum;
       break;
