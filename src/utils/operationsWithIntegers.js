@@ -25,6 +25,10 @@ export function operationsWithIntegers(sign, firstNum, secondNum) {
       break;
   }
 
+  if (firstNum > Number.MAX_SAFE_INTEGER) {
+    return 'Error';
+  }
+
   firstNum = makeFormatedNumber(firstNum, '.');
 
   return firstNum;

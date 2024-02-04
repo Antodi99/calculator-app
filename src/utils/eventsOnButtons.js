@@ -1,11 +1,6 @@
 import { displayResult } from '..';
 import { displayNumbers } from './displayNumbers';
-import {
-  formatDisplay,
-  formatPercentOperation,
-  isOnlyZeros,
-  makeFormatedNumber,
-} from './formatNumber';
+import { formatDisplay, makeFormatedNumber } from './formatNumber';
 import { calculate } from './calculate';
 
 // Constants for calculating
@@ -100,6 +95,10 @@ export function eventsOnButtons(event, pressed) {
 
   // Return the result of operation when press "="
   if (key === '=' || key === 'Enter') {
+    if (firstNum === 'Error') {
+      clearAll();
+      firstNum = '0';
+    }
     if (!secondNum && prevNum && prevSign) {
       firstNum = calculate(firstNum, prevNum, prevSign);
     } else if (secondNum && sign) {
@@ -115,17 +114,28 @@ export function eventsOnButtons(event, pressed) {
   if (key === '%') {
     event.preventDefault();
     if (secondNum === '') {
-      firstNum = formatPercentOperation(firstNum);
-      if (isOnlyZeros(firstNum)) {
-        clearAll();
-        firstNum = '0';
+      if (firstNum.includes(',')) {
+        let [integerPart, decimalPart] = firstNum.split(',');
+
+        if (decimalPart.length >= 4) {
+          decimalPart = decimalPart.substring(0, 5);
+          firstNum = [integerPart, decimalPart].join(',');
+          return;
+        }
       }
+      firstNum = calculate(firstNum, '100', '/');
       displayResult.innerText = firstNum;
     } else {
-      secondNum = formatPercentOperation(secondNum);
-      if (isOnlyZeros(secondNum)) {
-        secondNum = '0';
+      if (secondNum.includes(',')) {
+        let [integerPart, decimalPart] = secondNum.split(',');
+
+        if (decimalPart.length >= 4) {
+          decimalPart = decimalPart.substring(0, 5);
+          secondNum = [integerPart, decimalPart].join(',');
+          return;
+        }
       }
+      secondNum = calculate(secondNum, '100', '/');
       displayResult.innerText = secondNum;
     }
   }

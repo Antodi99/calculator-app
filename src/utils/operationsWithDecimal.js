@@ -12,7 +12,6 @@ export function operationsWithDecimal(sign, num1, num2) {
       firstNum = (firstNum + secondNum) / MAX_VALUE_DECIMAL;
       break;
     case '-':
-      console.log(firstNum, secondNum);
       firstNum = (firstNum - secondNum) / MAX_VALUE_DECIMAL;
       break;
     case '/':

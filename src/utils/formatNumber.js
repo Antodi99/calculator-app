@@ -26,29 +26,3 @@ export function formatDisplay(number, MAX_VALUE) {
   }
   return number;
 }
-
-export function formatPercentOperation(number) {
-  if (number.includes(',')) {
-    if (number.split(',')[1].length >= 4) {
-      return number.substring(0, number.split(',')[0].length + 6);
-    }
-  }
-  number = makeFormatedNumber(number, ',') / 100;
-  number = makeFormatedNumber(number, '.');
-  return number;
-}
-
-export function isOnlyZeros(number) {
-  const numberArr = number.split(',')[1];
-
-  if (number === '0') {
-    return false;
-  }
-
-  for (let i = 0; i < numberArr.length; i++) {
-    if (numberArr[i] !== '0') {
-      return false;
-    }
-  }
-  return true;
-}
